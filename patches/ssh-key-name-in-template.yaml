@@ -1,0 +1,8 @@
+apiVersion: dummy
+kind: dummy
+metadata:
+  name: dummy
+spec:
+  template:
+    spec:
+      sshKeyName: admin
