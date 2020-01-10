@@ -1,19 +1,32 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+
 resources:
 - cluster.yaml
 - control-plane.yaml
 - worker-node-pool.yaml
-namespace: cluster-quickstart
+
+namespace: cluster-api-quickstart
+
 patches:
 - target:
     kind: AWSMachine
-  path: patches/ssh-key-name.yaml
+  patch: |-
+    - op: replace
+      path: /spec/sshKeyName
+      value: cluster-api-quickstart
 - target:
     kind: AWSCluster
-  path: patches/ssh-key-name.yaml
+  patch: |-
+    - op: replace
+      path: /spec/sshKeyName
+      value: cluster-api-quickstart
 - target:
     kind: AWSMachineTemplate
-  path: patches/ssh-key-name-in-template.yaml
+  patch: |-
+    - op: replace
+      path: /spec/template/spec/sshKeyName
+      value: cluster-api-quickstart
+
 commonLabels:
   cluster.x-k8s.io/cluster-name: "cluster-api-quickstart"
